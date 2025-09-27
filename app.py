@@ -5,7 +5,7 @@ from transformers import pipeline
 st.set_page_config(page_title="NLP Assistant", layout="wide")
 st.markdown("""
     <style>
-    .main { background-color: #1e1e1e; color: white; }
+    body { background-color: #1e1e1e; color: white; }
     .block-container { padding-top: 2rem; }
     .stTextArea textarea { background-color: #1e1e1e; color: white; }
     .stSelectbox div { background-color: #1e1e1e; color: white; }
@@ -27,7 +27,8 @@ task = st.sidebar.selectbox("Choose a task", [
 ])
 
 # Text input
-user_input = st.text_area("Enter your text here:", height=200)
+st.markdown("## ✍️ Enter Your Text")
+user_input = st.text_area("", placeholder="Type your text here...", height=200)
 
 # Run button
 if st.button("Run"):
@@ -81,12 +82,3 @@ if st.button("Run"):
                 {"".join([f"<p>{e['word']} → {e['entity_group']} (Score: {e['score']:.2f})</p>" for e in entities])}
                 </div>
             """, unsafe_allow_html=True)
-
-
-
-
-
-
-
-
-
