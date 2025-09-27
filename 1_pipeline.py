@@ -13,28 +13,22 @@ def index():
         task = request.form.get('task')
 
         if task == 'sentiment':
-            sentiment_pipeline = pipeline('sentiment-analysis', model='distilbert/distilbert-base-uncased-finetuned-sst-2-english')
-            sent = sentiment_pipeline(user_input)
+            sent = pipeline('sentiment-analysis', model='distilbert/distilbert-base-uncased-finetuned-sst-2-english')(user_input)
 
         elif task == 'generation':
-            generation_pipeline = pipeline('text-generation', model='gpt2')
-            gen = generation_pipeline(user_input)
+            gen = pipeline('text-generation', model='gpt2')(user_input)
 
         elif task == 'translation':
-            translation_pipeline = pipeline('translation', model='Helsinki-NLP/opus-mt-fr-en')
-            trans = translation_pipeline(user_input)
+            trans = pipeline('translation', model='Helsinki-NLP/opus-mt-fr-en')(user_input)
 
         elif task == 'summarization':
-            summarization_pipeline = pipeline('summarization', model='facebook/bart-large-cnn')
-            summ = summarization_pipeline(user_input)
+            summ = pipeline('summarization', model='facebook/bart-large-cnn')(user_input)
 
         elif task == 'named_entity_recognition':
-            NER_pipeline = pipeline('ner', model='dslim/bert-base-NER', grouped_entities=True)
-            ner = NER_pipeline(user_input)
+            ner = pipeline('ner', model='dslim/bert-base-NER', grouped_entities=True)(user_input)
 
     return render_template('1_pipeline.html', sent=sent, gen=gen, trans=trans, ner=ner, summ=summ)
 
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 4000))
+    port = int(os.environ.get("PORT", 5000))
     app.run(debug=False, host='0.0.0.0', port=port)
-
