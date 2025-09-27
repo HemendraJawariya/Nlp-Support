@@ -13,19 +13,24 @@ def index():
         task = request.form.get('task')
 
         if task == 'sentiment':
-            sent = pipeline('sentiment-analysis')(user_input)
+            sentiment_pipeline = pipeline('sentiment-analysis', model='distilbert/distilbert-base-uncased-finetuned-sst-2-english')
+            sent = sentiment_pipeline(user_input)
 
         elif task == 'generation':
-            gen = pipeline('text-generation')(user_input)
+            generation_pipeline = pipeline('text-generation', model='gpt2')
+            gen = generation_pipeline(user_input)
 
         elif task == 'translation':
-            trans = pipeline('translation', model="Helsinki-NLP/opus-mt-fr-en")(user_input)
+            translation_pipeline = pipeline('translation', model='Helsinki-NLP/opus-mt-fr-en')
+            trans = translation_pipeline(user_input)
 
         elif task == 'summarization':
-            summ = pipeline('summarization')(user_input)
+            summarization_pipeline = pipeline('summarization', model='facebook/bart-large-cnn')
+            summ = summarization_pipeline(user_input)
 
         elif task == 'named_entity_recognition':
-            ner = pipeline("ner", grouped_entities=True)(user_input)
+            NER_pipeline = pipeline('ner', model='dslim/bert-base-NER', grouped_entities=True)
+            ner = NER_pipeline(user_input)
 
     return render_template('1_pipeline.html', sent=sent, gen=gen, trans=trans, ner=ner, summ=summ)
 
