@@ -27,7 +27,7 @@ task = st.sidebar.selectbox("Choose a task", [
 ])
 
 # Text input
-user_input = st.text_area("Enter your text here:", height=150)
+user_input = st.text_area("Enter your text here:", height=200)
 
 # Run button
 if st.button("Run"):
@@ -81,6 +81,7 @@ if st.button("Run"):
                 {"".join([f"<p>{e['word']} → {e['entity_group']} (Score: {e['score']:.2f})</p>" for e in entities])}
                 </div>
             """, unsafe_allow_html=True)
+
 
 
 
