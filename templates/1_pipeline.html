@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title> NLP Assistant</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    body {
+      margin: 0;
+      background-color: #1e1e1e;
+      font-family: 'Segoe UI', sans-serif;
+      color: #fff;
+    }
+    .sidebar {
+      width: 250px;
+      background-color: #2d2d2d;
+      height: 100vh;
+      position: fixed;
+      left: 0;
+      top: 0;
+      padding: 20px;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+    }
+    .sidebar h2 {
+      margin-bottom: 30px;
+      font-size: 22px;
+      color: #00aaff;
+    }
+    .main {
+      margin-left: 270px;
+      padding: 40px;
+    }
+    .chat-box {
+      background-color: #2a2a2a;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+    .chat-box h3 {
+      margin-top: 0;
+      color: #00aaff;
+    }
+    .input-area {
+      position: fixed;
+      bottom: 0;
+      left: 270px;
+      right: 0;
+      background-color: #2d2d2d;
+      padding: 15px 30px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    textarea, select {
+      flex: 1;
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      background-color: #1e1e1e;
+      color: #fff;
+    }
+    button {
+      background-color: #00aaff;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 8px;
+      color: #fff;
+      cursor: pointer;
+    }
+    button i {
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <h2><i class="fas fa-robot"></i>NLP-Asistant</h2>
+    <p>Select a task and enter your text below.</p>
+  </div>
+
+  <div class="main">
+    {% if sent %}
+    <div class="chat-box">
+      <h3>Sentiment Analysis</h3>
+      <p>{{ sent[0].label }} — Score: {{ sent[0].score }}</p>
+    </div>
+    {% endif %}
+
+    {% if gen %}
+    <div class="chat-box">
+      <h3>Generated Text</h3>
+      <p>{{ gen[0].generated_text }}</p>
+    </div>
+    {% endif %}
+
+    {% if trans %}
+    <div class="chat-box">
+      <h3>Translation</h3>
+      <p>{{ trans[0].translation_text }}</p>
+    </div>
+    {% endif %}
+
+    {% if summ %}
+    <div class="chat-box">
+      <h3>Summarization</h3>
+      <p>{{ summ[0].summary_text }}</p>
+    </div>
+    {% endif %}
+
+    {% if ner %}
+    <div class="chat-box">
+      <h3>Named Entity Recognition</h3>
+      <p>{{ ner[0].word }} — {{ ner[0].entity_group }} — Score: {{ ner[0].score }}</p>
+    </div>
+    {% endif %}
+  </div>
+
+  <div class="input-area">
+    <form method="POST" style="display: flex; width: 100%;">
+      <textarea name="user_input" rows="2" placeholder="Type your message..." required></textarea>
+      <select name="task">
+        <option value="sentiment">Sentiment</option>
+        <option value="generation">Generate</option>
+        <option value="translation">Translate</option>
+        <option value="summarization">Summarize</option>
+        <option value="named_entity_recognition">NER</option>
+      </select>
+      <button type="submit"><i class="fas fa-paper-plane"></i></button>
+    </form>
+  </div>
+</body>
+</html>
