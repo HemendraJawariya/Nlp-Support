@@ -16,13 +16,13 @@ def index():
             sent = pipeline('sentiment-analysis', model='distilbert/distilbert-base-uncased-finetuned-sst-2-english')(user_input)
 
         elif task == 'generation':
-            gen = pipeline('text-generation', model='gpt2')(user_input)
+            gen = pipeline('text-generation', model='distilgpt2')(user_input)
 
         elif task == 'translation':
-            trans = pipeline('translation', model='Helsinki-NLP/opus-mt-fr-en')(user_input)
+            trans = pipeline('text2text-generation', model='t5-small')(f"translate French to English: {user_input}")
 
         elif task == 'summarization':
-            summ = pipeline('summarization', model='facebook/bart-large-cnn')(user_input)
+            summ = pipeline('summarization', model='sshleifer/distilbart-cnn-12-6')(user_input)
 
         elif task == 'named_entity_recognition':
             ner = pipeline('ner', model='dslim/bert-base-NER', grouped_entities=True)(user_input)
